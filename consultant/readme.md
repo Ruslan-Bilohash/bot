@@ -100,3 +100,4 @@
 define('TELEGRAM_TOKEN',     '8344613173:AAEY7mnVx5Z4H8LovTmm-uj5s81-PS5--JA');
 define('YOUR_TELEGRAM_CHAT_ID', 5351698956);   // ваш chat_id
 define('GROK_MODEL', 'grok-4.20-0309-non-reasoning');
+вставте на сторінку - paste page: <script src="/chat-widget.js" defer></script>
