@@ -58,8 +58,8 @@ Kontakt: +47 462 55 885 | @bilohash
 Åpne filen `config.php` og fyll inn dine verdier:
 
 ```php
-define('TELEGRAM_TOKEN',     '8344613173:AAEY7mnVx5Z4H8LovTmm-uj5s81-PS5--JA'); // din token fra BotFather
-define('YOUR_TELEGRAM_CHAT_ID', 5351698956);   // ditt personlige chat_id (finn det med getUpdates)
+define('TELEGRAM_TOKEN',     'TELEGRAM_TOKEN'); // din token fra BotFather
+define('YOUR_TELEGRAM_CHAT_ID', 000000000);   // ditt personlige chat_id (finn det med getUpdates)
 define('GROK_MODEL', 'grok-4.20-0309-non-reasoning'); // eller en annen modell
 
 
