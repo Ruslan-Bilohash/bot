@@ -13,13 +13,6 @@ Kopier alle filene til rotmappen på nettstedet ditt (f.eks. via FTP eller filbe
 
 ## 2. Konfigurer config.php
 
-Åpne filen `config.php` og fyll inn dine verdier:
-
-```php
-define('TELEGRAM_TOKEN',     '8344613173:AAEY7mnVx5Z4H8LovTmm-uj5s81-PS5--JA'); // din token fra BotFather
-define('YOUR_TELEGRAM_CHAT_ID', 5351698956);   // ditt personlige chat_id (finn det med getUpdates)
-define('GROK_MODEL', 'grok-4.20-0309-non-reasoning'); // eller en annen modell
-
 mkdir conversations log
 chmod 777 conversations log
 
@@ -62,3 +55,11 @@ Beskytt admin.php ekstra med .htaccess (valgfritt):
 Lykke til med chatten!
 Laget med ❤️ av Ruslan Bilohash – PHP-utvikler fra Drammen, Norge.
 Kontakt: +47 462 55 885 | @bilohash
+Åpne filen `config.php` og fyll inn dine verdier:
+
+```php
+define('TELEGRAM_TOKEN',     '8344613173:AAEY7mnVx5Z4H8LovTmm-uj5s81-PS5--JA'); // din token fra BotFather
+define('YOUR_TELEGRAM_CHAT_ID', 5351698956);   // ditt personlige chat_id (finn det med getUpdates)
+define('GROK_MODEL', 'grok-4.20-0309-non-reasoning'); // eller en annen modell
+
+
