@@ -14,7 +14,7 @@
 ---
 
 ### 🇬🇧 **English**  
-**Modern AI Consultant Chatbot** for websites powered by Grok xAI.  
+**Modern AI Consultant Chatbot** for websites powered by Ruslan Bilohash.  
 
 **Key features:**  
 - Grok xAI backend (most truthful & fastest AI in 2026)  
