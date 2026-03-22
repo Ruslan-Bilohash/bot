@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Чат-бот Консультант – Інструкція з встановлення</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    body { font-feature-settings: "liga" 1, "calt" 1; }
+    .step-number {
+      @apply absolute -left-4 -top-4 w-10 h-10 rounded-full bg-teal-600 text-white flex items-center justify-center text-xl font-bold shadow-lg;
+    }
+    .code-block {
+      @apply bg-gray-900 text-gray-100 p-5 rounded-xl overflow-x-auto font-mono text-sm leading-6 border border-gray-700;
+    }
+    .tip {
+      @apply bg-teal-50 border-l-4 border-teal-500 p-4 my-4 rounded-r-xl;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 via-white to-teal-50 min-h-screen pb-20">
+
+  <!-- Шапка -->
+  <header class="bg-gradient-to-r from-teal-700 to-teal-900 text-white shadow-xl sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-6 py-5 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <div class="text-4xl">👩‍🏫</div>
+        <div>
+          <h1 class="text-2xl md:text-3xl font-bold">Marit Norsk</h1>
+          <p class="text-teal-200 text-sm md:text-base">Інструкція з встановлення • Bot AI </p>
+        </div>
+      </div>
+      <a href="#start" class="hidden md:block bg-white text-teal-900 px-6 py-3 rounded-full font-semibold hover:bg-teal-50 transition">
+        Почати встановлення →
+      </a>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-5 md:px-8 pt-10 pb-16">
+
+    <div class="text-center mb-16">
+      <div class="inline-block bg-teal-100 text-teal-800 px-5 py-2 rounded-full font-medium mb-4">
+        Повна покрокова інструкція
+      </div>
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+        Встановіть чат-бота та адмін-панель за 15–25 хвилин
+      </h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Система включає: чат-бота на сайті, збереження розмов у JSON, адмін-панель для перегляду всіх діалогів та відправку відповідей через Telegram.
+      </p>
+	    <!-- Головний блок коду – безпечний, не виконується -->
+  <div class="code-block mt-2 p-6 relative">
+    <button 
+      onclick="navigator.clipboard.writeText('&lt;script src=&quot;/marit/marit-chat.js&quot; defer&gt;&lt;/script&gt;'); alert('Скопійовано!')"
+      class="absolute top-3 right-3 bg-teal-700 text-white px-3 py-1 rounded text-sm hover:bg-teal-800 transition flex items-center gap-2 shadow-md"
+      title="Скопіювати код"
+    >
+      <i class="fas fa-copy"></i> Копіювати
+    </button>
+    
+    &lt;script src="/marit/marit-chat.js" defer&gt;&lt;/script&gt;
+  </div>
+
+</div>
+    </div>
+
+    <!-- Початок -->
+    <div id="start" class="relative mb-16">
+      <div class="step-number">1</div>
+      <h3 class="text-3xl font-bold text-teal-800 mb-6">Підготовка сервера</h3>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+          <h4 class="text-xl font-semibold mb-4 flex items-center gap-3">
+            <i class="fas fa-server text-teal-600"></i> Вимоги
+          </h4>
+          <ul class="space-y-3 text-gray-700">
+            <li>✓ PHP 8.1+</li>
+            <li>✓ Права на запис у папки (chmod 755–775)</li>
+            <li>✓ HTTPS (дуже бажано)</li>
+            <li>✓ curl, json, session</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+          <h4 class="text-xl font-semibold mb-4 flex items-center gap-3">
+            <i class="fas fa-folder-tree text-teal-600"></i> Рекомендована структура
+          </h4>
+          <pre class="code-block text-xs overflow-x-auto">
+marit/
+├── config.php
+├── index.html               (або index.php)
+├── marit-chat.js
+├── marit-bot.php
+├── marit-get-messages.php
+├── marit-telegram-webhook.php
+├── marit-admin.php          (адмінка)
+├── conversations/           ← чати зберігаються тут
+└── log/                     ← логи та rate-limit
+          </pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Крок 2 -->
+    <div class="relative mb-16">
+      <div class="step-number">2</div>
+      <h3 class="text-3xl font-bold text-teal-800 mb-6">Створіть та налаштуйте config.php</h3>
+
+      <div class="tip">
+        <strong>Важливо!</strong> Цей файл містить усі ключі. Ніколи не завантажуйте його в публічний Git.
+      </div>
+
+      <div class="code-block">
+        <?php
+// config.php — обов'язковий файл
+
+define('XAI_API_KEY',          'xai-ваш_ключ_тут');
+define('TELEGRAM_TOKEN',       'TELEGRAM_TOKEN');
+define('YOUR_TELEGRAM_CHAT_ID','YOUR_TELEGRAM_CHAT_ID');          // ваш Telegram ID
+
+define('ADMIN_PASSWORD',       'ВАШ_СИЛЬНИЙ_ПАРОЛЬ_ТУТ'); // мінімум 16 символів!
+
+define('CONVERSATIONS_DIR', __DIR__ . '/conversations');
+define('LOG_DIR',           __DIR__ . '/log');
+
+if (!is_dir(CONVERSATIONS_DIR)) mkdir(CONVERSATIONS_DIR, 0755, true);
+if (!is_dir(LOG_DIR))           mkdir(LOG_DIR,           0755, true);
+        ?>
+      </div>
+
+      <p class="mt-4 text-gray-600">
+        Змініть <code>ADMIN_PASSWORD</code>, <code>XAI_API_KEY</code> та Telegram налаштування.
+      </p>
+    </div>
+
+    <!-- Крок 3 -->
+    <div class="relative mb-16">
+      <div class="step-number">3</div>
+      <h3 class="text-3xl font-bold text-teal-800 mb-6">Завантажте всі файли</h3>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-2xl shadow hover:shadow-xl transition border border-gray-100">
+          <h4 class="font-bold text-lg mb-3">Основні</h4>
+          <ul class="space-y-2 text-teal-700">
+            <li>marit-chat.js</li>
+            <li>marit-bot.php</li>
+            <li>marit-get-messages.php</li>
+            <li>marit-telegram-webhook.php</li>
+            <li>marit-admin.php</li>
+          </ul>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow hover:shadow-xl transition border border-gray-100">
+          <h4 class="font-bold text-lg mb-3">Адмін-панель</h4>
+          <p class="text-gray-600">marit-admin.php — єдиний файл для перегляду всіх розмов</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow hover:shadow-xl transition border border-gray-100">
+          <h4 class="font-bold text-lg mb-3">Фронтенд</h4>
+          <p class="text-gray-600">index.html + marit-chat.js (підключається defer)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Крок 4 -->
+    <div class="relative mb-16">
+      <div class="step-number">4</div>
+      <h3 class="text-3xl font-bold text-teal-800 mb-6">Встановіть права доступу</h3>
+
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <pre class="code-block">
+# Папки
+chmod 755 conversations log
+
+# Файли
+chmod 644 *.php *.js *.html config.php
+
+# JSON-файли чатів (після появи)
+chmod 644 conversations/s_*.json
+        </pre>
+
+        <div class="tip mt-6">
+          <strong>На shared-хостингу</strong> використовуйте файлову панель (cPanel / DirectAdmin) → Права → 755 для папок, 644 для файлів.
+        </div>
+      </div>
+    </div>
+
+    <!-- Крок 5 -->
+    <div class="relative mb-16">
+      <div class="step-number">5</div>
+      <h3 class="text-3xl font-bold text-teal-800 mb-6">Перевірка роботи</h3>
+
+      <ol class="space-y-6 text-lg">
+        <li class="flex items-start gap-4">
+          <span class="text-2xl text-green-600">1.</span>
+          <div>Відкрийте сайт → чат-бот повинен з'явитись в правому нижньому куті</div>
+        </li>
+        <li class="flex items-start gap-4">
+          <span class="text-2xl text-green-600">2.</span>
+          <div>Напишіть повідомлення → перевірте Telegram (має прийти сповіщення)</div>
+        </li>
+        <li class="flex items-start gap-4">
+          <span class="text-2xl text-green-600">3.</span>
+          <div>Відкрийте <code>/marit/marit-admin.php</code> → введіть пароль → побачите список сесій</div>
+        </li>
+        <li class="flex items-start gap-4">
+          <span class="text-2xl text-green-600">4.</span>
+          <div>Клікніть на сесію → має завантажитись повна розмова</div>
+        </li>
+      </ol>
+    </div>
+
+    <!-- Фінал -->
+    <div class="text-center mt-20">
+      <div class="text-5xl mb-6">Готово! 🎉</div>
+      <p class="text-2xl font-medium text-teal-800 mb-8">
+        Система повністю працює: чат на сайті + адмінка для перегляду діалогів
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-6 justify-center">
+        <a href="#start" class="bg-teal-600 text-white px-10 py-5 rounded-xl text-xl font-semibold hover:bg-teal-700 transition shadow-lg">
+          Повернутись до початку
+        </a>
+        <a href="https://t.me/bilohash" target="_blank" class="bg-blue-600 text-white px-10 py-5 rounded-xl text-xl font-semibold hover:bg-blue-700 transition shadow-lg flex items-center gap-3 justify-center">
+          <i class="fab fa-telegram-plane text-2xl"></i> Зворотній зв'язок
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="bg-gray-800 text-gray-300 text-center py-8 mt-16">
+    <p>Marit Norsk Teacher System • 2026 • Зроблено з ❤️ BILOHASH.com</p>
+  </footer>
+  	<script src="/marit/marit-chat.js" defer></script>
+</body>
+</html>
