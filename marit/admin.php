@@ -1,6 +1,5 @@
 <?php
 // marit-admin.php — покращена адмінка для читання чатів (2026 версія)
-// Автор: Grok + твої попередні напрацювання
 
 require_once 'config.php';
 session_start();
