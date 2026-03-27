@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="uk" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Body & Face Studio — Адмін-панель чату</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .sidebar-link { transition: all 0.2s; }
+        .sidebar-link:hover { background-color: #4f46e5; color: white; }
+        .preview-chat { background: linear-gradient(135deg, #4f46e5, #7c3aed); }
+    </style>
+</head>
+<body class="bg-gray-950 text-gray-200 min-h-screen">
+
+<div class="flex h-screen">
+
+    <!-- SIDEBAR -->
+    <div class="w-72 bg-gray-900 border-r border-gray-800 flex flex-col">
+        <div class="p-6 border-b border-gray-800 flex items-center gap-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-violet-500 to-indigo-600 rounded-2xl flex items-center justify-center text-3xl">💆‍♀️</div>
+            <div>
+                <h1 class="text-2xl font-semibold">Body & Face</h1>
+                <p class="text-xs text-gray-400">Адмін-панель чату</p>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-4 py-6 space-y-1">
+            <a onclick="showSection('dashboard')" class="sidebar-link flex items-center gap-3 px-5 py-4 rounded-2xl text-indigo-400 font-medium active">
+                <i class="fa-solid fa-chart-pie"></i> Дашборд
+            </a>
+            <a onclick="showSection('general')" class="sidebar-link flex items-center gap-3 px-5 py-4 rounded-2xl">
+                <i class="fa-solid fa-cog"></i> Загальні налаштування
+            </a>
+            <a onclick="showSection('appearance')" class="sidebar-link flex items-center gap-3 px-5 py-4 rounded-2xl">
+                <i class="fa-solid fa-palette"></i> Зовнішній вигляд
+            </a>
+            <a onclick="showSection('prompt')" class="sidebar-link flex items-center gap-3 px-5 py-4 rounded-2xl">
+                <i class="fa-solid fa-comment-dots"></i> Системний промпт
+            </a>
+            <a onclick="showSection('services')" class="sidebar-link flex items-center gap-3 px-5 py-4 rounded-2xl">
+                <i class="fa-solid fa-spa"></i> Послуги та ціни
+            </a>
+            <a onclick="showSection('contacts')" class="sidebar-link flex items-center gap-3 px-5 py-4 rounded-2xl">
+                <i class="fa-solid fa-address-book"></i> Контакти
+            </a>
+            <a onclick="showSection('telegram')" class="sidebar-link flex items-center gap-3 px-5 py-4 rounded-2xl">
+                <i class="fa-brands fa-telegram"></i> Telegram
+            </a>
+            <a onclick="showSection('history')" class="sidebar-link flex items-center gap-3 px-5 py-4 rounded-2xl">
+                <i class="fa-solid fa-clock-rotate-left"></i> Історія чатів
+            </a>
+            <a onclick="showSection('advanced')" class="sidebar-link flex items-center gap-3 px-5 py-4 rounded-2xl">
+                <i class="fa-solid fa-shield-halved"></i> Розширені налаштування
+            </a>
+        </nav>
+
+        <div class="p-4 border-t border-gray-800">
+            <button onclick="logoutDemo()" class="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 py-4 rounded-2xl font-medium transition">
+                <i class="fa-solid fa-right-from-bracket"></i> Вийти з акаунту
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="flex-1 overflow-auto">
+
+        <!-- TOP BAR -->
+        <div class="bg-gray-900 border-b border-gray-800 px-8 py-5 flex items-center justify-between sticky top-0 z-50">
+            <h2 id="page-title" class="text-3xl font-semibold">Дашборд</h2>
+            <div class="flex items-center gap-4">
+                <div class="bg-green-500 text-green-950 text-xs font-bold px-4 py-2 rounded-3xl flex items-center gap-1">
+                    <div class="w-2 h-2 bg-green-950 rounded-full animate-pulse"></div>
+                    ONLINE
+                </div>
+                <div class="text-sm text-gray-400">27 березня 2026 • 09:41</div>
+                <div class="w-9 h-9 bg-gradient-to-br from-violet-400 to-indigo-500 rounded-2xl flex items-center justify-center text-xl cursor-pointer">👩‍💼</div>
+            </div>
+        </div>
+
+        <!-- DASHBOARD -->
+        <div id="section-dashboard" class="p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-gray-900 rounded-3xl p-6">
+                    <p class="text-gray-400 text-sm">Сьогоднішніх чатів</p>
+                    <p class="text-5xl font-semibold mt-3">14</p>
+                    <p class="text-emerald-400 text-sm mt-2">+8 за останню годину</p>
+                </div>
+                <div class="bg-gray-900 rounded-3xl p-6">
+                    <p class="text-gray-400 text-sm">Нових клієнтів</p>
+                    <p class="text-5xl font-semibold mt-3">7</p>
+                    <p class="text-emerald-400 text-sm mt-2">5 записалися на масаж</p>
+                </div>
+                <div class="bg-gray-900 rounded-3xl p-6">
+                    <p class="text-gray-400 text-sm">Активних сесій</p>
+                    <p class="text-5xl font-semibold mt-3">3</p>
+                    <p class="text-amber-400 text-sm mt-2">в реальному часі</p>
+                </div>
+                <div class="bg-gray-900 rounded-3xl p-6">
+                    <p class="text-gray-400 text-sm">Конверсія в запис</p>
+                    <p class="text-5xl font-semibold mt-3">64%</p>
+                    <p class="text-emerald-400 text-sm mt-2">+12% за тиждень</p>
+                </div>
+            </div>
+
+            <!-- Preview чату -->
+            <div class="mt-10 bg-gray-900 rounded-3xl p-6">
+                <h3 class="font-semibold mb-4 flex items-center gap-2"><i class="fa-solid fa-eye"></i> Попередній перегляд чату</h3>
+                <div id="live-preview" class="preview-chat w-full max-w-md mx-auto rounded-3xl overflow-hidden shadow-2xl text-white">
+                    <!-- JS буде вставляти сюди динамічний чат -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ІНШІ СЕКЦІЇ (General, Appearance, Prompt тощо) -->
+        <div id="section-general" class="p-8 hidden">
+            <h3 class="text-2xl font-semibold mb-6">Загальні налаштування</h3>
+            <div class="bg-gray-900 rounded-3xl p-8 space-y-8">
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Назва салону</label>
+                    <input id="bot-title" type="text" value="Body & Face Studio" class="w-full bg-gray-800 border border-gray-700 rounded-2xl px-6 py-4 text-lg">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Підзаголовок</label>
+                    <input id="bot-subtitle" type="text" value="Професійний масаж у Вільнюсі" class="w-full bg-gray-800 border border-gray-700 rounded-2xl px-6 py-4 text-lg">
+                </div>
+            </div>
+        </div>
+
+        <div id="section-appearance" class="p-8 hidden">
+            <h3 class="text-2xl font-semibold mb-6">Зовнішній вигляд чату</h3>
+            <div class="grid grid-cols-2 gap-6">
+                <div class="bg-gray-900 rounded-3xl p-8">
+                    <label class="block text-sm text-gray-400 mb-3">Основний колір</label>
+                    <input type="color" id="primary-color" value="#4f46e5" class="w-20 h-12 rounded-2xl cursor-pointer" onchange="updateLivePreview()">
+                </div>
+                <div class="bg-gray-900 rounded-3xl p-8">
+                    <label class="block text-sm text-gray-400 mb-3">Градієнт хедера</label>
+                    <select id="gradient-select" onchange="updateLivePreview()" class="w-full bg-gray-800 border border-gray-700 rounded-2xl px-6 py-4">
+                        <option value="linear-gradient(135deg, #4f46e5, #7c3aed)">Індиго → Фіолетовий</option>
+                        <option value="linear-gradient(135deg, #ec4899, #f43f5e)">Рожевий → Червоний</option>
+                        <option value="linear-gradient(135deg, #10b981, #34d399)">Зелений → Бірюзовий</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-prompt" class="p-8 hidden">
+            <h3 class="text-2xl font-semibold mb-6">Системний промпт бота</h3>
+            <textarea id="system-prompt" rows="12" class="w-full bg-gray-900 border border-gray-700 rounded-3xl p-8 text-sm leading-relaxed font-light">Ти — дружній та професійний чат-бот масажного салону Body & Face Studio у Вільнюсі...</textarea>
+            <button onclick="savePromptDemo()" class="mt-6 bg-indigo-600 hover:bg-indigo-700 px-10 py-4 rounded-2xl font-medium">Зберегти промпт</button>
+        </div>
+
+        <div id="section-services" class="p-8 hidden">
+            <h3 class="text-2xl font-semibold mb-6">Послуги та ціни</h3>
+            <table class="w-full bg-gray-900 rounded-3xl overflow-hidden">
+                <thead><tr class="bg-gray-800"><th class="text-left p-6">Послуга</th><th class="text-left p-6">Ціна</th><th class="text-left p-6">Тривалість</th><th class="w-24"></th></tr></thead>
+                <tbody id="services-table" class="text-sm"></tbody>
+            </table>
+            <button onclick="addServiceDemo()" class="mt-6 bg-emerald-600 hover:bg-emerald-700 px-8 py-4 rounded-2xl flex items-center gap-2">
+                <i class="fa-solid fa-plus"></i> Додати послугу
+            </button>
+        </div>
+
+        <!-- Контакти, Telegram, Історія та Advanced — можна розширити далі -->
+
+        <div class="p-8 text-center text-gray-500 text-sm border-t border-gray-800 mt-auto">
+            Demo версія адмін-панелі • 27 березня 2026<br>
+            Після узгодження зробимо повну PHP-версію з реальним збереженням
+        </div>
+    </div>
+</div>
+
+<script>
+// Перемикання секцій
+function showSection(section) {
+    document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active', 'text-indigo-400'));
+    document.querySelectorAll('a[onclick^="showSection"]').forEach(link => {
+        if (link.getAttribute('onclick').includes(section)) link.classList.add('active', 'text-indigo-400');
+    });
+    
+    document.querySelectorAll('#section-dashboard, #section-general, #section-appearance, #section-prompt, #section-services').forEach(el => el.classList.add('hidden'));
+    document.getElementById('section-' + section).classList.remove('hidden');
+    document.getElementById('page-title').textContent = {
+        dashboard: 'Дашборд',
+        general: 'Загальні налаштування',
+        appearance: 'Зовнішній вигляд',
+        prompt: 'Системний промпт',
+        services: 'Послуги та ціни'
+    }[section];
+}
+
+// Оновлення живого прев’ю чату
+function updateLivePreview() {
+    const color = document.getElementById('primary-color').value;
+    const gradient = document.getElementById('gradient-select').value;
+    const previewHTML = `
+        <div style="background: ${gradient}; padding: 20px; color: white; display: flex; align-items: center; gap: 14px;">
+            <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-3xl">💆‍♀️</div>
+            <div>
+                <div class="font-semibold text-xl">${document.getElementById('bot-title').value}</div>
+                <div class="text-sm opacity-90">${document.getElementById('bot-subtitle').value}</div>
+            </div>
+        </div>
+        <div class="bg-gray-50 p-6 text-gray-900 rounded-b-3xl">
+            <div class="bg-white p-4 rounded-3xl shadow mb-4">Привіт! Чим можу допомогти сьогодні?</div>
+            <div class="flex justify-end"><div class="bg-[${color}] text-white p-4 rounded-3xl rounded-br-sm max-w-[70%]">Хочу записатися на релакс-масаж</div></div>
+        </div>`;
+    document.getElementById('live-preview').innerHTML = previewHTML;
+}
+
+// Демо послуг
+const demoServices = [
+    {name: "Релаксаційний масаж тіла", price: "450 грн", duration: "60 хв"},
+    {name: "Лікувальний масаж спини", price: "520 грн", duration: "90 хв"},
+    {name: "Антицелюлітний масаж", price: "650 грн", duration: "75 хв"},
+    {name: "Масаж обличчя (лімфодренаж)", price: "380 грн", duration: "45 хв"}
+];
+
+function renderServices() {
+    const tbody = document.getElementById('services-table');
+    tbody.innerHTML = '';
+    demoServices.forEach((s, i) => {
+        tbody.innerHTML += `
+            <tr class="border-b border-gray-800 last:border-none">
+                <td class="p-6">${s.name}</td>
+                <td class="p-6">${s.price}</td>
+                <td class="p-6">${s.duration}</td>
+                <td class="p-6 text-center">
+                    <button onclick="deleteServiceDemo(${i})" class="text-red-500 hover:text-red-600"><i class="fa-solid fa-trash"></i></button>
+                </td>
+            </tr>`;
+    });
+}
+
+function addServiceDemo() {
+    const name = prompt("Назва послуги:");
+    if (!name) return;
+    demoServices.push({name, price: "0 грн", duration: "60 хв"});
+    renderServices();
+}
+
+function deleteServiceDemo(i) {
+    demoServices.splice(i, 1);
+    renderServices();
+}
+
+function savePromptDemo() {
+    alert("✅ Промпт успішно збережено! (у демо версії)");
+}
+
+function logoutDemo() {
+    if (confirm("Вийти з адмін-панелі?")) {
+        window.location.reload();
+    }
+}
+
+// Ініціалізація
+window.onload = () => {
+    renderServices();
+    updateLivePreview();
+    // Автоматично оновлювати прев’ю при зміні полів
+    document.getElementById('bot-title').addEventListener('input', updateLivePreview);
+    document.getElementById('bot-subtitle').addEventListener('input', updateLivePreview);
+};
+</script>
+
+</body>
+</html>
