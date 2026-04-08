@@ -98,14 +98,14 @@ curl_setopt_array($ch, [
     CURLOPT_POSTFIELDS => json_encode([
         'model'       => GROK_MODEL,
         'messages'    => $messages,
-        'temperature' => 0.75,
-        'max_tokens'  => 2048,
+        'temperature' => 0.85,
+        'max_tokens'  => 700,
     ]),
     CURLOPT_HTTPHEADER => [
         'Content-Type: application/json',
-        'Authorization: Bearer ' . XAI_API_KEY
+        'Authorization: Bearer ' . trim(XAI_API_KEY)
     ],
-    CURLOPT_TIMEOUT => 45,
+    CURLOPT_TIMEOUT => 60,
 ]);
 
 $resp = curl_exec($ch);
@@ -121,6 +121,16 @@ if ($http === 200) {
 
 $data[] = ['role' => 'assistant', 'content' => $reply, 'sender' => 'bot'];
 
-file_put_contents($file, json_encode($data, JSON_UNESCAPED_UNICODE));
+// Telegram-сповіщення — відповідь бота
+$tg_bot = "🧠 Grok відповів:\n" . htmlspecialchars($reply, ENT_QUOTES, 'UTF-8') . "\n\nSession: $session";
+@file_get_contents("https://api.telegram.org/bot" . TELEGRAM_TOKEN . "/sendMessage?" . http_build_query([
+    'chat_id'    => YOUR_TELEGRAM_CHAT_ID,
+    'text'       => $tg_bot,
+    'parse_mode' => 'HTML'
+]));
+
+log_chat("← Відповідь бота: " . substr($reply, 0, 400));
+
+file_put_contents($file, json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
 
 echo json_encode(['reply' => $reply, 'session' => $session]);

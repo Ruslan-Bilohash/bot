@@ -4,7 +4,7 @@ header('Content-Type: application/json; charset=utf-8');
 
 $session = $_GET['session'] ?? '';
 
-if (!$session || !preg_match('/^s_\d+_[a-f0-9]{6,12}$/', $session)) {
+if (!$session || !preg_match('/^s_\d+_[a-z0-9]{6,16}$/i', $session)) {
     http_response_code(400);
     echo json_encode(['error' => 'bad session format']);
     exit;
@@ -21,7 +21,7 @@ $data = json_decode(file_get_contents($file), true) ?: [];
 $out = [];
 
 foreach ($data as $row) {
-    if (isset($row['sender']) && isset($row['content'])) {
+    if (isset($row['sender']) && in_array($row['sender'], ['client', 'bot']) && isset($row['content'])) {
         $out[] = [
             'sender'  => $row['sender'],
             'content' => $row['content']
@@ -29,4 +29,4 @@ foreach ($data as $row) {
     }
 }
 
-echo json_encode($out);
+echo json_encode($out, JSON_UNESCAPED_UNICODE);
