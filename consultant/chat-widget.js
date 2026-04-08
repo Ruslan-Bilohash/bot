@@ -2,7 +2,7 @@
 (function () {
     const API_URL     = '/bot.php';
     const HISTORY_URL = '/get-messages.php';
-    const SESSION_KEY = 'bilohash_chat_session';
+    const SESSION_KEY = 'ai_consultant_session';
 
     let session = localStorage.getItem(SESSION_KEY);
     if (!session) {
@@ -97,6 +97,20 @@
         }
     }
 
+    function showLoading() {
+        const loading = document.createElement('div');
+        loading.id = 'chat-loading';
+        loading.style.cssText = `
+            align-self:flex-start; background:#e2e8f0; color:#64748b;
+            padding:12px 18px; border-radius:20px; border-bottom-left-radius:8px;
+            font-size:14px; line-height:1.4;
+        `;
+        loading.textContent = 'Консультант думає...';
+        messages.appendChild(loading);
+        messages.scrollTop = messages.scrollHeight;
+        return loading;
+    }
+
     async function send() {
         const input = document.getElementById('input');
         const text = input.value.trim();
@@ -105,6 +119,8 @@
         addMsg(text, 'client');
         input.value = '';
 
+        const loadingEl = showLoading();
+
         try {
             const r = await fetch(API_URL, {
                 method: 'POST',
@@ -112,11 +128,13 @@
                 body: JSON.stringify({session, message: text})
             });
             const data = await r.json();
+            if (loadingEl && loadingEl.parentNode) loadingEl.remove();
             if (data.reply) {
                 addMsg(data.reply, 'bot');
                 setTimeout(loadHistory, 1200);
             }
         } catch (e) {
+            if (loadingEl && loadingEl.parentNode) loadingEl.remove();
             addMsg('Помилка з\'єднання…', 'bot');
         }
     }
